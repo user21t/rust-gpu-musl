@@ -49,6 +49,7 @@ fn get_required_commit_hash() -> Result<String, Box<dyn Error>> {
 fn check_toolchain_version() -> Result<(), Box<dyn Error>> {
     // make sure we rebuild if RUSTGPU_SKIP_TOOLCHAIN_CHECK env var changes
     println!("cargo:rerun-if-env-changed=RUSTGPU_SKIP_TOOLCHAIN_CHECK");
+    println!("cargo::rustc-env=RUSTFLAGS='-C target-feature=-crt-static'");
 
     // if we're building from local source, check if REQUIRED_RUST_TOOLCHAIN matches ../../rust-toolchain.toml
     if env::current_dir()?.ends_with("crates/rustc_codegen_spirv") {
